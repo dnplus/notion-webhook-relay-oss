@@ -1,0 +1,16 @@
+{
+  "name": "notion-webhook-relay",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "test": "node --test",
+    "typecheck": "npx -y -p typescript@5 tsc -p tsconfig.json"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  },
+  "type": "module"
+}

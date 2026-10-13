@@ -1,0 +1,22 @@
+name = "notion-webhook-relay"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+# account_id is intentionally omitted: set CLOUDFLARE_ACCOUNT_ID in your shell or let wrangler pick it from login.
+
+# Secrets (set via `wrangler secret put`, never in this file):
+# - GROK_BOT_WEBHOOK_URL / GROK_BOT_WEBHOOK_AUTH
+# - NOTION_WEBHOOK_VERIFICATION_TOKEN
+# - NOTION_API_TOKEN
+# - GROK_BOT_STATUS_WEBHOOK_URL / GROK_BOT_STATUS_WEBHOOK_AUTH (optional)
+# Workspace-specific vars (TASKS_DATABASE_ID, TASKS_DATA_SOURCE_ID, SELF_BOT_IDS) are also
+# best set as secrets or via `wrangler deploy --var`, so your Notion IDs stay out of git.
+
+[observability]
+enabled = true
+head_sampling_rate = 1
+
+[vars]
+NOTION_API_VERSION = "2022-06-28"
+STATUS_PROPERTY_NAME = "Status"
+STATUS_PROPERTY_ID = "notion%3A%2F%2Ftasks%2Fstatus_property"
+HANDOFF_STATUSES = "Ready for AI"
