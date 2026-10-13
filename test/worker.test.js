@@ -14,8 +14,8 @@ const DEFAULTS = {
 
 if (!globalThis.crypto) globalThis.crypto = webcrypto;
 const env = {
-  GROK_BOT_WEBHOOK_URL: 'https://routine.example/comments',
-  GROK_BOT_WEBHOOK_AUTH: 'routine-secret-marker',
+  RELAY_TARGET_URL: 'https://routine.example/comments',
+  RELAY_TARGET_KEY: 'routine-secret-marker',
   NOTION_API_TOKEN: 'notion-secret-marker',
   TASKS_DATABASE_ID: DEFAULTS.TASKS_DATABASE_ID,
   TASKS_DATA_SOURCE_ID: DEFAULTS.TASKS_DATA_SOURCE_ID,
@@ -248,7 +248,7 @@ test('default and undefined handoff setting produce complete payload', async () 
     assert.equal(calls[0].method, 'GET');
     assert.equal(calls[0].headers.Authorization, 'Bearer notion-secret-marker');
     assert.equal(calls[0].headers['Notion-Version'], DEFAULTS.NOTION_API_VERSION);
-    assert.equal(calls[1].url, env.GROK_BOT_WEBHOOK_URL);
+    assert.equal(calls[1].url, env.RELAY_TARGET_URL);
     assert.equal(calls[1].headers['X-Notion-Signature'], undefined);
     assert.deepEqual(JSON.parse(calls[1].body), {
       event_type: 'page.status_handoff', source: 'notion-webhook-relay', notion_event_id: e.id,
@@ -287,16 +287,16 @@ test('decoded property IDs and select fallback work', async () => {
   assert.equal((await invoke({ body: JSON.stringify(e), notionPage: p })).calls.length, 2);
 });
 test('status uses second routine URL and auth; comments retain original routine', async () => {
-  const bindings = { GROK_BOT_STATUS_WEBHOOK_URL: 'https://routine.example/status', GROK_BOT_STATUS_WEBHOOK_AUTH: 'Bearer second-secret-marker' };
+  const bindings = { RELAY_STATUS_TARGET_URL: 'https://routine.example/status', RELAY_STATUS_TARGET_KEY: 'Bearer second-secret-marker' };
   const status = await invoke({ bindings });
-  assert.equal(status.calls[1].url, bindings.GROK_BOT_STATUS_WEBHOOK_URL);
-  assert.equal(status.calls[1].headers.Authorization, bindings.GROK_BOT_STATUS_WEBHOOK_AUTH);
+  assert.equal(status.calls[1].url, bindings.RELAY_STATUS_TARGET_URL);
+  assert.equal(status.calls[1].headers.Authorization, bindings.RELAY_STATUS_TARGET_KEY);
   const comment = await invoke({ bindings, body: '{"type":"comment.created"}' });
-  assert.equal(comment.calls[0].url, env.GROK_BOT_WEBHOOK_URL);
+  assert.equal(comment.calls[0].url, env.RELAY_TARGET_URL);
   assert.equal(comment.calls[0].headers.Authorization, 'Bearer routine-secret-marker');
 });
 test('second routine URL alone falls back to original auth', async () => {
-  const { calls } = await invoke({ bindings: { GROK_BOT_STATUS_WEBHOOK_URL: 'https://routine.example/status' } });
+  const { calls } = await invoke({ bindings: { RELAY_STATUS_TARGET_URL: 'https://routine.example/status' } });
   assert.equal(calls[1].url, 'https://routine.example/status');
   assert.equal(calls[1].headers.Authorization, 'Bearer routine-secret-marker');
 });
@@ -357,7 +357,7 @@ describe('comment events: context + self-trigger', () => {
     assert.deepEqual(log.authors, [`person:${HUMAN}`]);
     assert.equal(log.notion_lookup, 'ok');
     const upstream = calls.at(-1);
-    assert.equal(upstream.url, env.GROK_BOT_WEBHOOK_URL);
+    assert.equal(upstream.url, env.RELAY_TARGET_URL);
     assert.equal(upstream.headers['X-Notion-Signature'], undefined);
     const body = JSON.parse(upstream.body);
     assert.equal(body.type, 'comment.created');

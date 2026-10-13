@@ -1,11 +1,11 @@
 # Copy to .dev.vars for `wrangler dev` (git-ignored). Use placeholder values only.
-GROK_BOT_WEBHOOK_URL=https://example.com/your-routine-webhook
-GROK_BOT_WEBHOOK_AUTH=replace-me
+RELAY_TARGET_URL=https://example.com/your-routine-webhook
+RELAY_TARGET_KEY=replace-me
 NOTION_WEBHOOK_VERIFICATION_TOKEN=replace-me
 NOTION_API_TOKEN=replace-me
 # Optional second routine for status handoffs
-GROK_BOT_STATUS_WEBHOOK_URL=
-GROK_BOT_STATUS_WEBHOOK_AUTH=
+RELAY_STATUS_TARGET_URL=
+RELAY_STATUS_TARGET_KEY=
 # Workspace-specific IDs (Notion UUIDs, dashes optional)
 TASKS_DATABASE_ID=
 TASKS_DATA_SOURCE_ID=

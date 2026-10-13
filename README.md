@@ -38,11 +38,11 @@ All configuration comes from environment bindings. Nothing workspace-specific is
 
 | Name | Purpose |
 | --- | --- |
-| `GROK_BOT_WEBHOOK_URL` | Upstream webhook URL (required) |
-| `GROK_BOT_WEBHOOK_AUTH` | Upstream key, raw or `Bearer ...` (required) |
+| `RELAY_TARGET_URL` | Upstream webhook URL (required) |
+| `RELAY_TARGET_KEY` | Upstream key, raw or `Bearer ...` (required) |
 | `NOTION_WEBHOOK_VERIFICATION_TOKEN` | Notion subscription verification token (strongly recommended) |
 | `NOTION_API_TOKEN` | Notion integration token, used to read pages/comments |
-| `GROK_BOT_STATUS_WEBHOOK_URL` / `_AUTH` | Optional separate upstream for status handoffs |
+| `RELAY_STATUS_TARGET_URL` / `RELAY_STATUS_TARGET_KEY` | Optional separate upstream for status handoffs |
 
 **Vars** (`[vars]` in `wrangler.toml`, or secrets if you prefer to keep IDs private):
 
@@ -62,8 +62,8 @@ For local development copy `.dev.vars.example` to `.dev.vars` (git-ignored).
 ```bash
 npm install
 npx wrangler login            # or export CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID
-npx wrangler secret put GROK_BOT_WEBHOOK_URL
-npx wrangler secret put GROK_BOT_WEBHOOK_AUTH
+npx wrangler secret put RELAY_TARGET_URL
+npx wrangler secret put RELAY_TARGET_KEY
 npx wrangler secret put NOTION_API_TOKEN
 npx wrangler secret put TASKS_DATABASE_ID     # or put IDs in [vars]
 npx wrangler secret put TASKS_DATA_SOURCE_ID

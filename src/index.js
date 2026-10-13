@@ -62,8 +62,8 @@ export default {
         }
         body = JSON.stringify({ ...event, relay: { source: 'notion-webhook-relay', ...result.context } });
       }
-      const webhookUrl = (statusEvent && env.GROK_BOT_STATUS_WEBHOOK_URL) || env.GROK_BOT_WEBHOOK_URL;
-      const auth = (statusEvent && env.GROK_BOT_STATUS_WEBHOOK_AUTH) || env.GROK_BOT_WEBHOOK_AUTH;
+      const webhookUrl = (statusEvent && env.RELAY_STATUS_TARGET_URL) || env.RELAY_TARGET_URL;
+      const auth = (statusEvent && env.RELAY_STATUS_TARGET_KEY) || env.RELAY_TARGET_KEY;
       if (!webhookUrl || !auth) {
         log.reason = 'missing_webhook_config';
         return Response.json({ ok: false, error: 'Worker webhook secrets not configured' }, { status: 500 });

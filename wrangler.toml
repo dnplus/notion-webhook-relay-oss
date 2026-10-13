@@ -4,10 +4,10 @@ compatibility_date = "2026-10-01"
 # account_id is intentionally omitted: set CLOUDFLARE_ACCOUNT_ID in your shell or let wrangler pick it from login.
 
 # Secrets (set via `wrangler secret put`, never in this file):
-# - GROK_BOT_WEBHOOK_URL / GROK_BOT_WEBHOOK_AUTH
+# - RELAY_TARGET_URL / RELAY_TARGET_KEY
 # - NOTION_WEBHOOK_VERIFICATION_TOKEN
 # - NOTION_API_TOKEN
-# - GROK_BOT_STATUS_WEBHOOK_URL / GROK_BOT_STATUS_WEBHOOK_AUTH (optional)
+# - RELAY_STATUS_TARGET_URL / RELAY_STATUS_TARGET_KEY (optional)
 # Workspace-specific vars (TASKS_DATABASE_ID, TASKS_DATA_SOURCE_ID, SELF_BOT_IDS) are also
 # best set as secrets or via `wrangler deploy --var`, so your Notion IDs stay out of git.
 
