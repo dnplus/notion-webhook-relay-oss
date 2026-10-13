@@ -1,0 +1,12 @@
+# Copy to .dev.vars for `wrangler dev` (git-ignored). Use placeholder values only.
+RELAY_TARGET_URL=https://example.com/your-routine-webhook
+RELAY_TARGET_KEY=replace-me
+NOTION_WEBHOOK_VERIFICATION_TOKEN=replace-me
+NOTION_API_TOKEN=replace-me
+# Optional second routine for status handoffs
+RELAY_STATUS_TARGET_URL=
+RELAY_STATUS_TARGET_KEY=
+# Workspace-specific IDs (Notion UUIDs, dashes optional)
+TASKS_DATABASE_ID=
+TASKS_DATA_SOURCE_ID=
+SELF_BOT_IDS=
